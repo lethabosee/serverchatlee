@@ -1,29 +1,29 @@
-import socket
-import threading
-import tkinter
-import tkinter.scrolledtext
-from tkinter import simpledialog
+import socket     #import socket module to establish network 
+import threading    # import threading to enable processes to run at the same time 
+import tkinter      #binds/interfaces the gui tootkit 
+import tkinter.scrolledtext   #allows the usage of multiple texts in 1 line 
+from tkinter import simpledialog    #a chat dialog .eg what is your name ? , respond my name is , flowing in a dialog order 
 
-HOST = '127.0.0.1'
-PORT = 9090
+HOST = '127.0.0.1'        
+PORT = 9090    
 
-class Client:
+class Client:   #classify the client 
 
-    def __init__(self, host, port):
+    def __init__(self, host, port):    #self will act as first argument followed by the host and port  
 
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)      #SOCK_STREAM shows thst socket used it a TCP , AF_INET shows the adress its connected to 
         self.sock.connect((host, port))
 
-        msg = tkinter.Tk()
+        msg = tkinter.Tk()   #this funtion has to bind the message  to toolkit
         msg.withdraw()
 
-        self.nickname = simpledialog.askstring("nickname", "please choose a nickname", parent=msg)
+        self.nickname = simpledialog.askstring("nickname", "please choose a nickname", parent=msg)    
 
         self.gui_done = False
 
         self.running = True
 
-        gui_thread = threading.Thread(target=self.gui_loop)
+        gui_thread = threading.Thread(target=self.gui_loop)       #bind the argument to the loop 
         receive_thread = threading.Thread(target=self.receive)
 
         gui_thread.start()
